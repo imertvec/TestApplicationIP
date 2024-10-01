@@ -27,5 +27,6 @@ include(":app")
 
 /*Core*/
 include(":core:design")
+include(":core:navigation")
 
 /*Features*/
