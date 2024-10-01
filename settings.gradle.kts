@@ -24,3 +24,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "TestApplicationIP"
 include(":app")
+
+/*Core*/
+include(":core:design")
+
+/*Features*/

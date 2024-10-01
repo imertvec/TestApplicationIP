@@ -1,4 +1,4 @@
-package ru.vagavagus.testapplicationip.ui.theme
+package ru.vagavagus.design.ui
 
 import androidx.compose.ui.graphics.Color
 
