@@ -10,6 +10,6 @@ import org.gradle.plugin.use.PluginDependency
 
 val Project.libs get() = the<LibrariesForLibs>()
 
-fun PluginAware.apply(plugin: Provider<PluginDependency>) {
+fun PluginAware.applyPlugin(plugin: Provider<PluginDependency>) {
     apply(plugin = plugin.get().pluginId)
 }
