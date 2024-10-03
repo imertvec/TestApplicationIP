@@ -30,3 +30,4 @@ include(":core:design")
 include(":core:navigation")
 
 /*Features*/
+include(":feature:root")
