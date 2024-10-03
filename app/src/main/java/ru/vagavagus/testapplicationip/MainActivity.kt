@@ -12,17 +12,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            TestApplicationIPTheme {
-                /*todo: Add new top-level into @screens*/
-                NavigationSetup(
-                    startDestination = BottomTabs.Messages,
-                    screens = listOf(
-
-                    )
-                )
-            }
             RootComposable(
                 screens = listOf(
+                    DevicesListNavigation,
                     MessagesNavigation
                 )
             )
