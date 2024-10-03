@@ -1,24 +1,21 @@
 package ru.vagavagus.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavigatorProvider
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun NavigationSetup(
+    navController: NavHostController,
     startDestination: BottomTabs,
-    screens: List<ComposableScreen>
+    screens: List<ComposableScreen>,
+    modifier: Modifier = Modifier,
 ) {
-    val navController = rememberNavController()
-
     NavHost(
+        modifier = modifier,
         navController = navController,
         startDestination = startDestination,
     ) {

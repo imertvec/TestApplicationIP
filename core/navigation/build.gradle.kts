@@ -9,4 +9,5 @@ dependencies {
     api(libs.androidx.navigation.compose)
 
     implementation(libs.kotlinx.serialization)
+    implementation(libs.kotlin.reflection)
 }

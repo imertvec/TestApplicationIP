@@ -18,4 +18,10 @@ sealed class BottomTabs(
 
     @Serializable
     object Messages: BottomTabs(R.string.bottom_bar_messages)
+
+    companion object {
+        val entries = BottomTabs::class.sealedSubclasses.map {
+            it.objectInstance as BottomTabs
+        }
+    }
 }
