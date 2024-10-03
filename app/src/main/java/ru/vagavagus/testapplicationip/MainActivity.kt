@@ -3,11 +3,9 @@ package ru.vagavagus.testapplicationip
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import ru.vagavagus.design.ui.TestApplicationIPTheme
 import ru.vagavagus.devices_list.DevicesListNavigation
 import ru.vagavagus.messages.MessagesNavigation
-import ru.vagavagus.navigation.BottomTabs
-import ru.vagavagus.navigation.NavigationSetup
+import ru.vagavagus.root.RootComposable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +21,11 @@ class MainActivity : ComponentActivity() {
                     )
                 )
             }
+            RootComposable(
+                screens = listOf(
+                    MessagesNavigation
+                )
+            )
         }
     }
 }

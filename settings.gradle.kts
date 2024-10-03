@@ -31,3 +31,4 @@ include(":core:navigation")
 
 /*Features*/
 include(":feature:root")
+include(":feature:devices-list")
