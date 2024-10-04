@@ -28,6 +28,7 @@ include(":app")
 /*Core*/
 include(":core:design")
 include(":core:navigation")
+include(":core:android-domain")
 
 /*Features*/
 include(":feature:root")
