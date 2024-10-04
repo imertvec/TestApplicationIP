@@ -22,5 +22,9 @@ gradlePlugin {
             id = "ru.vagavagus.android.library.compose"
             implementationClass = "plugins.AndroidLibraryComposePlugin"
         }
+        register("androidComposeFeature") {
+            id = "ru.vagavagus.android.feature"
+            implementationClass = "plugins.AndroidComposeFeaturePlugin"
+        }
     }
 }
