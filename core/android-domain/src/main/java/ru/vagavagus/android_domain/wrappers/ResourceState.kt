@@ -6,4 +6,5 @@ sealed class ResourceState <out T> {
     /*We can put anything args to constructor, what we wish handle*/
     data class Error (val errorMessage: String): ResourceState<Nothing>()
     object Loading: ResourceState<Nothing>()
+    object Idle: ResourceState<Nothing>()
 }
