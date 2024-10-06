@@ -1,5 +1,6 @@
 package ru.vagavagus.messages.screen.components
 
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -8,6 +9,7 @@ import kotlinx.datetime.format.char
 import kotlinx.datetime.toLocalDateTime
 import ru.vagavagus.android_domain.orbit.OrbitViewModel
 import ru.vagavagus.android_domain.wrappers.ResourceState
+import ru.vagavagus.messages.model.MessageReceive
 import ru.vagavagus.messages.repository.RemoteMessagesRepository
 import ru.vagavagus.messages.repository.UserDataRepository
 
@@ -30,6 +32,7 @@ internal class MessagesViewModel(
             MessagesEvent.ToggleExpandSentMessages -> onToggleExpandSentMessages()
             is MessagesEvent.ChangeMessageText -> onChangeMessageText(event.value)
             is MessagesEvent.SendClick -> onSendClick(event.recipient)
+            MessagesEvent.RetryReceiveRecipients -> onRetryReceiveRecipients()
         }
     }
 
@@ -81,11 +84,25 @@ internal class MessagesViewModel(
         reduce { state.copy(sentExpanded = !state.sentExpanded) }
     }
 
-    private fun onChangeMessageText(value: String) = intent {
+    private fun onChangeMessageText(value: String) = blockingIntent {
         reduce { state.copy(messageText = value) }
     }
 
-    private fun onSendClick(recipient: String?) {
-        /*Continue here...*/
+    private fun onSendClick(recipient: String) = intent {
+        val message = MessageReceive(
+            timestamp = Clock.System.now().toEpochMilliseconds(),
+            recipient = recipient,
+            text = state.messageText
+        )
+
+        remoteMessagesRepository.sendMessage(message)
+            .onSuccess { handleEvent(MessagesEvent.FetchSentMessages) }
+            .onFailure { postSideEffect(MessagesSideEffect.ShowErrorSendToast) }
+    }
+
+    private fun onRetryReceiveRecipients() = intent {
+        reduce { state.copy(recipients = ResourceState.Loading) }
+        val availableRecipients = remoteMessagesRepository.fetchAvailableRecipients()
+        reduce { state.copy(recipients = availableRecipients) }
     }
 }

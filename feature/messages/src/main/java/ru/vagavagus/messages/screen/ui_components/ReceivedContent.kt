@@ -53,12 +53,12 @@ import kotlinx.datetime.toLocalDateTime
 import ru.vagavagus.android_domain.wrappers.ResourceState
 import ru.vagavagus.design.extensions.spacing
 import ru.vagavagus.feature.messages.R
-import ru.vagavagus.messages.model.MessageReceive
+import ru.vagavagus.messages.model.MessageSend
 
 @Composable
 internal fun ReceivedContent(
     expanded: Boolean,
-    itemsState: ResourceState<List<MessageReceive>>,
+    itemsState: ResourceState<List<MessageSend>>,
     onReceiveClick: () -> Unit,
     onToggleIcon: () -> Unit
 ) {
@@ -101,7 +101,7 @@ internal fun ReceivedContent(
 @Composable
 private fun LoadReceiveMessagesButton(
     expanded: Boolean,
-    receivedState: ResourceState<List<MessageReceive>>,
+    receivedState: ResourceState<List<MessageSend>>,
     onReceiveClick: () -> Unit,
     onIconClick: () -> Unit,
 ) {
@@ -146,7 +146,7 @@ private fun LoadReceiveMessagesButton(
 @OptIn(FormatStringsInDatetimeFormats::class)
 @Composable
 private fun ReceiveListItem(
-    message: MessageReceive,
+    message: MessageSend,
     modifier: Modifier = Modifier,
 ) {
     var isTextVisible by remember { mutableStateOf(false) }
@@ -198,8 +198,8 @@ private fun ReceiveListItem(
                         accentColor = MaterialTheme.colorScheme.surfaceVariant
                     )
                     StyledText(
-                        resId = R.string.recipient_title,
-                        styledText = message.recipient,
+                        resId = R.string.author_title,
+                        styledText = message.author,
                         accentColor = MaterialTheme.colorScheme.surfaceVariant
                     )
                 }

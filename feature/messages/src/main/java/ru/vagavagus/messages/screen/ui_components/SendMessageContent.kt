@@ -12,12 +12,15 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -48,8 +51,9 @@ import ru.vagavagus.feature.messages.R
 fun SendMessageContent(
     messageText: String,
     recipientsState: ResourceState<List<String>>,
-    onSendClick: (recipient: String?) -> Unit,
-    onChangeText: (newText: String) -> Unit
+    onSendClick: (recipient: String) -> Unit,
+    onChangeText: (newText: String) -> Unit,
+    onRetryReceiveRecipients: () -> Unit
 ) {
     var selectedRecipient: String? by remember { mutableStateOf(null) }
 
@@ -76,7 +80,8 @@ fun SendMessageContent(
             DropDownMenuRecipients(
                 selectedRecipient = selectedRecipient,
                 recipientsState = recipientsState,
-                onRecipientPick = { selectedRecipient = it }
+                onRecipientPick = { selectedRecipient = it },
+                onRetryReceiveRecipients = onRetryReceiveRecipients
             )
 
             MessageTextField(
@@ -84,8 +89,18 @@ fun SendMessageContent(
                 onChangeText = onChangeText
             )
 
-            Button(onClick = { onSendClick(selectedRecipient) }) {
-
+            val focusManager = LocalFocusManager.current
+            Button(
+                onClick = {
+                    onSendClick(selectedRecipient!!)
+                    focusManager.clearFocus()
+                },
+                enabled = messageText.isNotEmpty() && selectedRecipient != null,
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            ) {
+                Text(text = stringResource(id = R.string.button_send))
             }
         }
     }
@@ -96,6 +111,7 @@ private fun DropDownMenuRecipients(
     selectedRecipient: String?,
     recipientsState: ResourceState<List<String>>,
     onRecipientPick: (String) -> Unit,
+    onRetryReceiveRecipients: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var isDropDownExpanded by remember { mutableStateOf(false) }
@@ -114,31 +130,47 @@ private fun DropDownMenuRecipients(
 
             when(recipientsState) {
                 ResourceState.Idle -> { /*No action*/ }
-                is ResourceState.Error -> TODO()
                 ResourceState.Loading -> CircularProgressIndicator(
                     modifier = Modifier.size(MaterialTheme.spacing.medium)
                 )
-                is ResourceState.Success -> Box {
-                    /*Take first if not selected*/
-                    TextButton(
-                        onClick = { isDropDownExpanded = true },
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+                is ResourceState.Error -> {
+                    Text(text = stringResource(id = R.string.recipients_fetch_error))
+                    IconButton(
+                        modifier = Modifier.size(MaterialTheme.spacing.medium),
+                        onClick = onRetryReceiveRecipients
                     ) {
-                        Text(text = selectedRecipient ?: recipientsState.data.first())
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = null
+                        )
                     }
+                }
+                is ResourceState.Success -> Box {
+                    if(recipientsState.data.isNotEmpty()) {
+                        TextButton(
+                            onClick = { isDropDownExpanded = true },
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+                        ) {
+                            /*Take first if not selected*/
+                            val recipient = selectedRecipient ?: recipientsState.data.first()
+                            onRecipientPick(recipient)
 
-                    DropdownMenu(
-                        expanded = isDropDownExpanded,
-                        onDismissRequest = { isDropDownExpanded = false }
-                    ) {
-                        recipientsState.data.forEach { recipient ->
-                            DropdownMenuItem(
-                                text = { Text(text = recipient) },
-                                onClick = {
-                                    onRecipientPick(recipient)
-                                    isDropDownExpanded = false
-                                }
-                            )
+                            Text(text = recipient)
+                        }
+
+                        DropdownMenu(
+                            expanded = isDropDownExpanded,
+                            onDismissRequest = { isDropDownExpanded = false }
+                        ) {
+                            recipientsState.data.forEach { recipient ->
+                                DropdownMenuItem(
+                                    text = { Text(text = recipient) },
+                                    onClick = {
+                                        onRecipientPick(recipient)
+                                        isDropDownExpanded = false
+                                    }
+                                )
+                            }
                         }
                     }
                 }
@@ -162,19 +194,27 @@ private fun MessageTextField(
             .focusRequester(focusRequester),
         value = messageText,
         onValueChange = onChangeText,
-        label = { Text(text = stringResource(id = R.string.text_input_hint)) },
+        label = {
+            Text(
+                text = stringResource(id = R.string.text_input_hint),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.MailOutline,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.secondary
+                contentDescription = null
             )
         },
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
+            unfocusedIndicatorColor = Color.Transparent,
+            focusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unfocusedLabelColor = MaterialTheme.colorScheme.primary,
+            focusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unfocusedLeadingIconColor = MaterialTheme.colorScheme.primary
         )
     )
 }

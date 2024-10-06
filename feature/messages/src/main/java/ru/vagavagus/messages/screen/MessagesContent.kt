@@ -64,6 +64,7 @@ internal fun MessagesContent(
             recipientsState = uiState.recipients,
             onSendClick = { recipient -> handleEvent(MessagesEvent.SendClick(recipient)) },
             onChangeText = { text -> handleEvent(MessagesEvent.ChangeMessageText(text)) },
+            onRetryReceiveRecipients = { handleEvent(MessagesEvent.RetryReceiveRecipients) }
         )
     }
 }

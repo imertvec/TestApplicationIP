@@ -10,7 +10,7 @@
     <string name="author_title">Author</string>
     <string name="recipient_title">Recipient</string>
     <string name="text_title">Text</string>
-    <string name="text_input_hint">Type here your message...</string>
+    <string name="text_input_hint">Type here your message…</string>
 
     
     <!--Other-->
@@ -22,4 +22,8 @@
 
     <string name="show_text_label">Show text</string>
     <string name="hide_text_label">Hide text</string>
+    <string name="recipients_fetch_error">Failed to receive recipients</string>
+
+    <!--Errors-->
+    <string name="failure_send_message">The message could not be sent</string>
 </resources>

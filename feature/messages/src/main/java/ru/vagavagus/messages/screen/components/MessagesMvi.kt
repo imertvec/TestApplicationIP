@@ -5,8 +5,8 @@ import ru.vagavagus.messages.model.MessageReceive
 import ru.vagavagus.messages.model.MessageSend
 
 internal data class MessagesState(
-    val received: ResourceState<List<MessageReceive>> = ResourceState.Idle,
-    val sent: ResourceState<List<MessageSend>> = ResourceState.Idle,
+    val received: ResourceState<List<MessageSend>> = ResourceState.Idle,
+    val sent: ResourceState<List<MessageReceive>> = ResourceState.Idle,
     val author: String,
     val period: String,
     val receivedExpanded: Boolean = false,
@@ -26,11 +26,12 @@ internal sealed interface MessagesEvent {
     object FetchSentMessages: MessagesEvent
     object ToggleExpandReceiveMessages: MessagesEvent
     object ToggleExpandSentMessages: MessagesEvent
-    class SendClick(val recipient: String?): MessagesEvent
+    class SendClick(val recipient: String): MessagesEvent
     class ChangeMessageText(val value: String): MessagesEvent
+    object RetryReceiveRecipients: MessagesEvent
 
 }
 
 internal sealed interface MessagesSideEffect {
-
+    object ShowErrorSendToast: MessagesSideEffect
 }
