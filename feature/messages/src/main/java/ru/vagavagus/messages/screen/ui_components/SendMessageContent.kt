@@ -48,7 +48,7 @@ import ru.vagavagus.design.extensions.spacing
 import ru.vagavagus.feature.messages.R
 
 @Composable
-fun SendMessageContent(
+internal fun SendMessageContent(
     messageText: String,
     recipientsState: ResourceState<List<String>>,
     onSendClick: (recipient: String) -> Unit,

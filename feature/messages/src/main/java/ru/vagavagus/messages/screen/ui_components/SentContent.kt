@@ -56,7 +56,7 @@ import ru.vagavagus.feature.messages.R
 import ru.vagavagus.messages.model.MessageReceive
 
 @Composable
-fun SentContent(
+internal fun SentContent(
     expanded: Boolean,
     itemsState: ResourceState<List<MessageReceive>>,
     onLoadClick: () -> Unit,
