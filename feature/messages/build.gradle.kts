@@ -1,9 +1,9 @@
 plugins {
-    alias(libs.plugins.ruvagavagus.android.library.compose)
+    alias(libs.plugins.ruvagavagus.android.feature)
 }
 
 android.namespace = Config.withBase("feature.messages")
 
 dependencies {
-    implementation(projects.core.navigation)
+    implementation(libs.kotlinx.datetime)
 }

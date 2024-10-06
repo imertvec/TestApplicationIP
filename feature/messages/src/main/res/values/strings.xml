@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Top info-->
+    <string name="name_label">Name</string>
+    <string name="period_label">Period</string>
+    
+    <!--Columns-->
+    <string name="time_title">Time</string>
+    <string name="date_title">Date</string>
+    <string name="author_title">Author</string>
+    <string name="recipient_title">Recipient</string>
+    <string name="text_title">Text</string>
+
+    
+    <!--Other-->
+    <string name="index_sym">#</string>
+    <string name="button_send">Send</string>
+    <string name="button_receive">Load Received</string>
+    <string name="action_label_new">New</string>
+
+    <string name="show_text_label">Show text</string>
+    <string name="hide_text_label">Hide text</string>
+</resources>
