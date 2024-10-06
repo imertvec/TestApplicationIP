@@ -17,8 +17,10 @@ class AndroidComposeFeaturePlugin: Plugin<Project> {
                 "implementation"(project(":core:android-domain"))
                 "implementation"(project(":core:navigation"))
 
-                "implementation"(libs.koin.compose.viewmodel)
+                /*Other dependencies*/
                 "implementation"(platform(libs.koin.bom))
+                "implementation"(libs.koin.compose.viewmodel)
+                "implementation"(libs.koin.android)
 
                 "implementation"(libs.orbit.viewmodel)
             }
