@@ -67,7 +67,7 @@ internal fun ReceivedContent(
             modifier = Modifier
                 .padding(horizontal = MaterialTheme.spacing.medium)
         ) {
-            ReceiveButton(
+            LoadReceiveMessagesButton(
                 receivedState = itemsState,
                 onReceiveClick = onReceiveClick,
                 expanded = expanded,
@@ -86,7 +86,7 @@ internal fun ReceivedContent(
                         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium)
                     ) {
                         items(itemsState.data) { message ->
-                            ReceivedListItem(
+                            ReceiveListItem(
                                 modifier = Modifier.fillMaxWidth(),
                                 message = message
                             )
@@ -99,20 +99,7 @@ internal fun ReceivedContent(
 }
 
 @Composable
-private fun ErrorMessage(message: String) {
-    Text(
-        modifier = Modifier
-            .clip(RoundedCornerShape(20))
-            .background(MaterialTheme.colorScheme.onSurfaceVariant)
-            .padding(MaterialTheme.spacing.small),
-        text = message,
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.primary
-    )
-}
-
-@Composable
-private fun ReceiveButton(
+private fun LoadReceiveMessagesButton(
     expanded: Boolean,
     receivedState: ResourceState<List<MessageReceive>>,
     onReceiveClick: () -> Unit,
@@ -158,7 +145,7 @@ private fun ReceiveButton(
 
 @OptIn(FormatStringsInDatetimeFormats::class)
 @Composable
-private fun ReceivedListItem(
+private fun ReceiveListItem(
     message: MessageReceive,
     modifier: Modifier = Modifier,
 ) {
