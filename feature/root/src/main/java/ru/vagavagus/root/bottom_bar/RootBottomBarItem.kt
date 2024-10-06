@@ -15,7 +15,7 @@ internal fun RootBottomBarItem(
     TextButton(onClick = onClick) {
         Text(
             text = tab.title,
-            color = if(selected) MaterialTheme.colorScheme.primary
+            color = if(selected) MaterialTheme.colorScheme.tertiary
                 else MaterialTheme.colorScheme.secondary
         )
     }
