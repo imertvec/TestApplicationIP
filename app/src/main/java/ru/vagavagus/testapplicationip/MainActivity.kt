@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import ru.vagavagus.design.ui.TestApplicationIPTheme
-import ru.vagavagus.devices_list.DevicesListNavigation
+import ru.vagavagus.devices_list.screen.DevicesListNavigation
 import ru.vagavagus.messages.screen.MessagesNavigation
 import ru.vagavagus.root.RootComposable
 
