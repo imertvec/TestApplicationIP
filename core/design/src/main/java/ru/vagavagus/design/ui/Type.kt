@@ -8,5 +8,5 @@ import androidx.compose.ui.unit.sp
 val Typography = Typography(
     titleLarge = TextStyle(fontFamily = Merriweather, fontWeight = FontWeight.Bold, fontSize = 20.sp),
     bodyMedium = TextStyle(fontFamily = Merriweather, fontWeight = FontWeight.Bold),
-    bodySmall = TextStyle(fontFamily = Merriweather, fontWeight = FontWeight.Normal, fontSize = 14.sp)
+    bodySmall = TextStyle(fontFamily = Merriweather, fontWeight = FontWeight.Normal, fontSize = 12.sp)
 )
