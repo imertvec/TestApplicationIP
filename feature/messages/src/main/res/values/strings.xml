@@ -10,12 +10,14 @@
     <string name="author_title">Author</string>
     <string name="recipient_title">Recipient</string>
     <string name="text_title">Text</string>
+    <string name="text_input_hint">Type here your message...</string>
 
     
     <!--Other-->
     <string name="index_sym">#</string>
     <string name="button_send">Send</string>
     <string name="button_receive">Load Received</string>
+    <string name="button_load_sent">Load Sent</string>
     <string name="action_label_new">New</string>
 
     <string name="show_text_label">Show text</string>

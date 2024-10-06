@@ -25,13 +25,18 @@ internal class MessagesViewModel(
         when(event) {
             MessagesEvent.InitializeUserData -> onInitializeUserData()
             MessagesEvent.FetchReceivedMessages -> onFetchReceivedMessages()
-            MessagesEvent.ToggleExpandIcon -> onToggleExpandIcon()
+            MessagesEvent.ToggleExpandReceiveMessages -> onToggleExpandReceiveMessages()
+            MessagesEvent.FetchSentMessages -> onFetchSentMessages()
+            MessagesEvent.ToggleExpandSentMessages -> onToggleExpandSentMessages()
+            is MessagesEvent.ChangeMessageText -> onChangeMessageText(event.value)
+            is MessagesEvent.SendClick -> onSendClick(event.recipient)
         }
     }
 
     private fun onInitializeUserData() = intent {
         val periodUtc = userDataRepository.fetchSelectedPeriod()
         val author = userDataRepository.fetchCurrentAuthor()
+        val availableRecipients = remoteMessagesRepository.fetchAvailableRecipients()
 
         val localFormattedPeriod = Instant
             .fromEpochMilliseconds(periodUtc)
@@ -47,7 +52,13 @@ internal class MessagesViewModel(
                 }
             )
 
-        reduce { state.copy(author = author, period = localFormattedPeriod) }
+        reduce {
+            state.copy(
+                author = author,
+                period = localFormattedPeriod,
+                recipients = availableRecipients
+            )
+        }
     }
 
     private fun onFetchReceivedMessages() = intent {
@@ -56,7 +67,25 @@ internal class MessagesViewModel(
         reduce { state.copy(received = items, receivedExpanded = true) }
     }
 
-    private fun onToggleExpandIcon() = intent {
+    private fun onToggleExpandReceiveMessages() = intent {
         reduce { state.copy(receivedExpanded = !state.receivedExpanded) }
+    }
+
+    private fun onFetchSentMessages() = intent {
+        reduce { state.copy(sent = ResourceState.Loading) }
+        val items = remoteMessagesRepository.fetchSentMessages()
+        reduce { state.copy(sent = items, sentExpanded = true) }
+    }
+
+    private fun onToggleExpandSentMessages() = intent {
+        reduce { state.copy(sentExpanded = !state.sentExpanded) }
+    }
+
+    private fun onChangeMessageText(value: String) = intent {
+        reduce { state.copy(messageText = value) }
+    }
+
+    private fun onSendClick(recipient: String?) {
+        /*Continue here...*/
     }
 }

@@ -16,12 +16,14 @@ import ru.vagavagus.feature.messages.R
 import ru.vagavagus.messages.screen.components.MessagesEvent
 import ru.vagavagus.messages.screen.components.MessagesState
 import ru.vagavagus.messages.screen.ui_components.ReceivedContent
+import ru.vagavagus.messages.screen.ui_components.SendMessageContent
+import ru.vagavagus.messages.screen.ui_components.SentContent
 import ru.vagavagus.messages.screen.ui_components.StyledText
 
 @Composable
 internal fun MessagesContent(
     uiState: MessagesState,
-    handleEvent: (MessagesEvent) -> Unit
+    handleEvent: (MessagesEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -38,12 +40,30 @@ internal fun MessagesContent(
             StyledText(resId = R.string.name_label, styledText = uiState.author)
             StyledText(resId = R.string.period_label, styledText = uiState.period)
         }
+
         HorizontalDivider()
+
         ReceivedContent(
             expanded = uiState.receivedExpanded,
             itemsState = uiState.received,
             onReceiveClick = { handleEvent(MessagesEvent.FetchReceivedMessages) },
-            onToggleIcon = { handleEvent(MessagesEvent.ToggleExpandIcon) }
+            onToggleIcon = { handleEvent(MessagesEvent.ToggleExpandReceiveMessages) }
+        )
+
+        HorizontalDivider()
+
+        SentContent(
+            expanded = uiState.sentExpanded,
+            itemsState = uiState.sent,
+            onLoadClick = { handleEvent(MessagesEvent.FetchSentMessages) },
+            onToggleIcon = { handleEvent(MessagesEvent.ToggleExpandSentMessages) }
+        )
+
+        SendMessageContent(
+            messageText = uiState.messageText,
+            recipientsState = uiState.recipients,
+            onSendClick = { recipient -> handleEvent(MessagesEvent.SendClick(recipient)) },
+            onChangeText = { text -> handleEvent(MessagesEvent.ChangeMessageText(text)) },
         )
     }
 }
