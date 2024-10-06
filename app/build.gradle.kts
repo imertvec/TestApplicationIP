@@ -3,6 +3,8 @@ plugins {
 }
 
 dependencies {
+    implementation(projects.core.design)
+
     implementation(projects.feature.root)
     implementation(projects.feature.devicesList)
     implementation(projects.feature.messages)
