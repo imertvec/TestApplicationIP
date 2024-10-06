@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Statuses-->
+    <string name="status_live">Live</string>
+    <string name="status_approved">Approved</string>
+    <string name="status_mute">Mute</string>
+    <string name="status_blocked">Blocked</string>
+    <string name="status_dead">Dead</string>
+    <string name="all_label">All</string>
+    
+    <!--Column titles-->
+    <string name="title_name">Name</string>
+    <string name="title_type">Type</string>
+    <string name="title_status">Status</string>
+    <string name="title_mac">MAC</string>
+    <string name="title_subscriptions">Subscriptions</string>
+
+    <!--Other-->
+    <string name="loader_title">Loading…</string>
+    <string name="error_message">Something went wrong, try again</string>
+</resources>
