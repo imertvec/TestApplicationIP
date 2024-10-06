@@ -29,7 +29,18 @@ fun RootComposable(
         bottomBar = {
             RootBottomBar(
                 currentTab = currentTab,
-                onNavigate = navController::navigate
+                onNavigate = { tab ->
+                    navController.navigate(tab) {
+                        /*if need save state between top-screens*/
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
+                                saveState = true
+                            }
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
             )
         }
     ) { scaffoldPaddings ->
