@@ -1,9 +1,5 @@
 plugins {
-    alias(libs.plugins.ruvagavagus.android.library.compose)
+    alias(libs.plugins.ruvagavagus.android.feature)
 }
 
 android.namespace = Config.withBase("feature.devicesList")
-
-dependencies {
-    implementation(projects.core.navigation)
-}
