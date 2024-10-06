@@ -6,6 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import ru.vagavagus.navigation.transitions.ScreenEnterTransition
+import ru.vagavagus.navigation.transitions.ScreenExitTransition
 
 @Composable
 fun NavigationSetup(
@@ -18,6 +20,8 @@ fun NavigationSetup(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination,
+        enterTransition = { ScreenEnterTransition },
+        exitTransition = { ScreenExitTransition }
     ) {
         screens.forEach { it.composable(this, navController) }
     }

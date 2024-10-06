@@ -20,6 +20,8 @@ sealed class BottomTabs(
     object Messages: BottomTabs(R.string.bottom_bar_messages)
 
     companion object {
+        val StartDestination = Messages
+
         val entries = BottomTabs::class.sealedSubclasses.map {
             it.objectInstance as BottomTabs
         }
