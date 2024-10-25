@@ -17,6 +17,20 @@ A small application showing some of my skills in android development
 - Multi-module with convention plugins
 - Clean Architecture
 
+## Project structure
+``` bash
+├── app
+├── build-logic
+├── core
+│   ├── android-domain
+│   ├── design
+│   └── navigation
+├── feature
+│   ├── devices-list
+│   ├── messages
+│   └── root
+```
+
 ## Gif with demo
 <img src="https://github.com/imertvec/TestApplicationIP/blob/master/app_demo.gif" width="350" height="750">
 
